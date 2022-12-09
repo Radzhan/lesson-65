@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosApi from '../../axiosApi';
+import Admin from '../../components/Admin/Admin';
 import { Category } from '../../types';
 
 const Page = () => {
@@ -19,14 +20,27 @@ const Page = () => {
     useEffect(() => {
         response().catch(console.error)
     }, [response])
+
+    let card;
+
+    if (pageName !== 'admin') {
+        card = (
+            <div className="card">
+                <div className="card-header">
+                    {content?.title}
+                </div>
+                <div className="card-body">
+                    <p className="card-text">{content?.content}</p>
+                </div>
+            </div>
+        )
+    } else if (pageName === 'admin'){
+        card = <Admin/>
+    }
+
     return (
-        <div className="card">
-            <div className="card-header">
-                {content?.title}
-            </div>
-            <div className="card-body">
-                <p className="card-text">{content?.content}</p>
-            </div>
+        <div>
+            {card}
         </div>
     );
 };
